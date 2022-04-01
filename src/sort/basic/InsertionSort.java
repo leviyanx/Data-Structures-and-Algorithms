@@ -2,13 +2,15 @@ package sort.basic;
 
 import sort.utils.ArrayUtil;
 
-import java.util.Arrays;
+import static sort.utils.ArrayUtil.isEquals;
+import static sort.utils.ArrayUtil.printArray;
 
-public class InsertionSort {
+public class InsertionSort implements Sort {
     /**
      * 插入排序
      */
-    public static void insertionSort(int arr[]) {
+    @Override
+    public void sort(int arr[]) {
         // 数组为空或只有一个元素，不需要排序。
         if (arr == null || arr.length < 2) {
             return;
@@ -24,48 +26,38 @@ public class InsertionSort {
     }
 
     /**
-     * 比对的方法
+     * 对数器
+     *
+     * @param arr
+     * @return
      */
-    public static void rightMethod(int arr[]) {
-        Arrays.sort(arr);
-    }
-
-    // 对数器
-    public static void main(String[] args) {
-      /*  // 对数器
+    @Override
+    public String validateSort(int[] arr) {
         boolean success = true;
         int testTimes = 50000;
         int size = 10;
         int value = 20;
         // 测试testTimes次
         for (int i = 0; i < testTimes; i++) {
-            int[] arr1 = arrayGenerator(size, value); // 待测试方法
-            int[] arr2 = copyArray(arr1); // 正确方法
-            int[] arr3 = copyArray(arr1); // 原始样本
-            insertionSort(arr1);
-            rightMethod(arr2);
+            int[] arr1 = ArrayUtil.arrayGenerator(size, value); // 待测试方法
+            int[] arr2 = ArrayUtil.copyArray(arr1); // 正确方法
+            int[] arr3 = ArrayUtil.copyArray(arr1); // 原始样本
+            sort(arr1);
+            Sort.rightMethod(arr2);
             if (!isEquals(arr1, arr2)) {
                 success = false;
                 printArray(arr3);
                 break;
             }
         }
-        System.out.println(success ? "Nice" : "Fucking fucked");*/
+        return success ? "Nice" : "Fucking fucked";
+    }
 
-        // 正常测试insertionSort
-        int size = 10;
-        int value = 20;
-        int[] arr1 = ArrayUtil.arrayGenerator(size, value);
-        int[] arr2 = ArrayUtil.copyArray(arr1);
-        insertionSort(arr1);
-        System.out.println("原始样本");
-        for(int i = 0; i < arr2.length; i++) {
-            System.out.print(arr2[i] + " ");
-        }
-        System.out.println("\n待测试方法");
-        for(int i = 0; i < arr1.length; i++) {
-            System.out.print(arr1[i] + " ");
-        }
+
+    // 对数器
+    public static void main(String[] args) {
+
+
     }
 
 

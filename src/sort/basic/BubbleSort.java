@@ -2,15 +2,14 @@ package sort.basic;
 
 import sort.utils.ArrayUtil;
 
-import java.util.Arrays;
-
-public class BubbleSort {
+public class BubbleSort implements Sort{
     /**
      * 冒泡排序
      * 是先确定当前无序区中的最大值，
      * 然后将无序区逐渐缩减。
      */
-    public static void bubbleSotring(int arr[]) {
+    @Override
+    public void sort(int arr[]) {
         // 数组为空或只有一个元素，不需要排序。
         if (arr == null || arr.length <= 1) {
             // 用来终止方法运行
@@ -29,15 +28,8 @@ public class BubbleSort {
 
     }
 
-    /**
-     * 比对的方法
-     */
-    public static void rightMethod(int arr[]) {
-        Arrays.sort(arr);
-    }
-
-    // 对数器
-    public static void main(String[] args) {
+    @Override
+    public String validateSort(int[] arr) {
         // 对数器
         boolean success = true;
         int testTimes = 50000;
@@ -48,30 +40,24 @@ public class BubbleSort {
             int[] arr1 = ArrayUtil.arrayGenerator(size, value); // 待测试方法
             int[] arr2 = ArrayUtil.copyArray(arr1); // 正确方法
             int[] arr3 = ArrayUtil.copyArray(arr1); // 原始样本
-            bubbleSotring(arr1);
-            rightMethod(arr2);
+            sort(arr1);
+            Sort.rightMethod(arr2);
             if (!ArrayUtil.isEquals(arr1, arr2)) {
                 success = false;
                 ArrayUtil.printArray(arr3);
                 break;
             }
         }
-        System.out.println(success ? "Nice" : "Fucking fucked");
+        return success ? "Nice" : "Fucking fucked";
+    }
 
-       /*正常测试bubbleSorting
-        int size = 10;
-        int value = 20;
-        int[] arr1 = arrayGenerator(size, value);
-        int[] arr2 = copyArray(arr1);
-        bubbleSotring(arr1);
-        for(int i = 0; i < arr1.length; i++) {
-            System.out.print(arr1[i] + " ");
-        }
-        System.out.println();
-        for(int i = 0; i < arr2.length; i++) {
-            System.out.print(arr2[i] + " ");
-        }
-        */
+    public static void main(String[] args) {
+
+        // 验证排序是否正确
+        Sort sort = new BubbleSort();
+        // int[] arr1 = arrayGenerator(size, value);
+        // sort.validateSort();
+
     }
 
 

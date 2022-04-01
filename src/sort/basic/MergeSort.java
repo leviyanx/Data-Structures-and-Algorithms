@@ -2,10 +2,8 @@ package sort.basic;
 
 import sort.utils.ArrayUtil;
 
-import java.util.Arrays;
-
-public class MergeSort {
-    public static void mergeSort(int[] arr) {
+public class MergeSort implements Sort {
+    public void sort(int[] arr) {
         // 数组为null，或只有一个元素
         if (arr == null || arr.length < 2) {
             return;
@@ -13,7 +11,8 @@ public class MergeSort {
         mergeSort(arr, 0, arr.length - 1);
     }
 
-    public static void mergeSort(int[] arr, int L, int R) {
+
+    public void mergeSort(int[] arr, int L, int R) {
         // base case
         if (L == R) {
             return;
@@ -26,7 +25,7 @@ public class MergeSort {
     }
 
     // merge the left and right parts that have been sorted separately
-    public static void merge(int[] arr, int L, int mid, int R) {
+    public void merge(int[] arr, int L, int mid, int R) {
         int[] temp = new int[R - L + 1];
         int p1 = L; // 左指针
         int p2 = mid + 1; // 右指针
@@ -52,16 +51,13 @@ public class MergeSort {
     }
 
     /**
-     * 比对的方法
+     * 对数器
+     * @param arr
+     * @return
      */
-    public static void rightMethod(int arr[]) {
-        Arrays.sort(arr);
-    }
+    @Override
+    public String validateSort(int[] arr) {
 
-
-    // 对数器
-    public static void main(String[] args) {
-        // 对数器
         boolean success = true;
         int testTimes = 50000;
         int size = 10;
@@ -71,8 +67,8 @@ public class MergeSort {
             int[] arr1 = ArrayUtil.arrayGenerator(size, value); // 待测试方法
             int[] arr2 = ArrayUtil.copyArray(arr1); // 正确方法
             int[] arr3 = ArrayUtil.copyArray(arr1); // 原始样本
-            mergeSort(arr1);
-            rightMethod(arr2);
+            sort(arr1);
+            Sort.rightMethod(arr2);
             if (!ArrayUtil.isEquals(arr1, arr2)) {
                 success = false;
                 // 打印原始样本
@@ -87,21 +83,10 @@ public class MergeSort {
                 break;
             }
         }
-        System.out.println(success ? "Nice" : "Fucking fucked");
+        return success ? "Nice" : "Fucking fucked";
+    }
 
-    /*    // 正常测试 mergeSort
-        int size = 10;
-        int value = 20;
-        int[] arr1 = arrayGenerator(size, value);
-        int[] arr2 = copyArray(arr1);
-        selectionSort(arr1);
-        System.out.println("原始样本");
-        for(int i = 0; i < arr2.length; i++) {
-            System.out.print(arr2[i] + " ");
-        }
-        System.out.println("\n待测试方法");
-        for(int i = 0; i < arr1.length; i++) {
-            System.out.print(arr1[i] + " ");
-        }*/
+    public static void main(String[] args) {
+
     }
 }

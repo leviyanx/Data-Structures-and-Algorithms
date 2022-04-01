@@ -2,15 +2,14 @@ package sort.basic;
 
 import sort.utils.ArrayUtil;
 
-import java.util.Arrays;
-
 /**
  * the first step: build the heap in linear time
  * then, perform N-1 DeleteMaxes by swapping the last element in the heap with the first,
  * decrementing the heap size, percolating down
  */
-public class HeapSort {
-    public static void heapSort(int[] arr) {
+public class HeapSort implements Sort{
+
+    public void sort(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
         }
@@ -35,11 +34,11 @@ public class HeapSort {
      * @param arr：数组
      * @param index：新加进大根堆的元素下标
      */
-        public static void heapInsertion(int[] arr, int index) {
-            while (arr[index] > arr[(index - 1) / 2]) { // 当 arr[index] 比他的父节点大
-                ArrayUtil.swap(arr, index, (index - 1) / 2);
-                index = (index - 1) / 2;
-            }
+    public void heapInsertion(int[] arr, int index) {
+        while (arr[index] > arr[(index - 1) / 2]) { // 当 arr[index] 比他的父节点大
+            ArrayUtil.swap(arr, index, (index - 1) / 2);
+            index = (index - 1) / 2;
+        }
     }
 
     /**
@@ -48,7 +47,7 @@ public class HeapSort {
      * @param index：指针
      * @param size：无序区的大小
      */
-    public static void heapify(int[] arr, int index, int size) {
+    public void heapify(int[] arr, int index, int size) {
         int leftChild = 2 * index + 1;
         while (leftChild < size ) {
             int largest = arr[leftChild] <= arr[leftChild + 1] && leftChild + 1 < size ? leftChild + 1 : leftChild; // 左右孩子中的较大者
@@ -64,15 +63,8 @@ public class HeapSort {
         }
     }
 
-    /**
-     * 比对的方法
-     */
-    public static void rightMethod(int arr[]) {
-        Arrays.sort(arr);
-    }
-
-    // 对数器
-    public static void main(String[] args) {
+    @Override
+    public String validateSort(int[] arr) {
         // 对数器
         boolean success = true;
         int testTimes = 50000;
@@ -83,8 +75,8 @@ public class HeapSort {
             int[] arr1 = ArrayUtil.arrayGenerator(size, value); // 待测试方法
             int[] arr2 = ArrayUtil.copyArray(arr1); // 正确方法
             int[] arr3 = ArrayUtil.copyArray(arr1); // 原始样本
-            heapSort(arr1);
-            rightMethod(arr2);
+            sort(arr1);
+            Sort.rightMethod(arr2);
             if (!ArrayUtil.isEquals(arr1, arr2)) {
                 success = false;
                 // 打印原始样本
@@ -99,7 +91,12 @@ public class HeapSort {
                 break;
             }
         }
-        System.out.println(success ? "Nice" : "Fucking fucked");
+        return success ? "Nice" : "Fucking fucked";
+    }
+
+    // 对数器
+    public static void main(String[] args) {
+
 
 /*        // 正常测试 heapSort
         int size = 10;
