@@ -4,6 +4,9 @@
 *.ipr
 .idea/
 
+# cloud file
+*.DS_Store
+
 # IntelliJ
 out/
 
